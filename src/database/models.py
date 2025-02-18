@@ -6,6 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncAttrs, async_sessionmaker, create_async_
 from sqlalchemy.orm import Mapped, mapped_column, DeclarativeBase
 from sqlalchemy.schema import CreateSchema
 
+
 load_dotenv()
 
 DB_USER: str | None = os.getenv("DB_USER")
@@ -39,8 +40,19 @@ class User(Base):
     def __str__(self):
         return f"id: {self.id}, tg_id: {self.tg_id}, tg_name:{self.tg_name}, user_full_name: {self.user_full_name}, register_dt:{self.register_dt}"
 
+# class Orders(Base):
+#     __tablename__ = 'Items'
+#     __table_args__ = {'schema': SCHEMA_NAME}
+#
+#     id:
+#     user_id =
+
 
 async def async_main():
     async with engine.begin() as conn:
         await conn.execute(CreateSchema(SCHEMA_NAME, if_not_exists=True))
         await conn.run_sync(Base.metadata.create_all)
+
+
+#df = pd.read_excel(Items.xlsx, sheet_name='Товары')
+#df.to_sql('Items',connection,if_exists='replace')
